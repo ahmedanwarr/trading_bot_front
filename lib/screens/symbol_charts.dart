@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 class SymbolCharts extends StatefulWidget {
   static String id = 'symbol_charts';
 
+  const SymbolCharts({super.key});
+
   @override
   State<SymbolCharts> createState() => _SymbolChartsState();
 }
@@ -35,7 +37,7 @@ class _SymbolChartsState extends State<SymbolCharts> {
     initializeSocket();
     // Schedule updates every second
     updateTimer =
-        Timer.periodic(Duration(seconds: 1), (Timer t) => updateData());
+        Timer.periodic(const Duration(seconds: 1), (Timer t) => updateData());
   }
 
   void initializeSocket() {
@@ -210,22 +212,22 @@ class _SymbolChartsState extends State<SymbolCharts> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             'Trading Bot',
             style: TextStyle(color: Colors.white),
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 147, 119, 196),
+        backgroundColor: const Color.fromARGB(255, 147, 119, 196),
       ),
       body: isLoadingSymbols
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : hasErrorSymbols
-              ? Center(child: Text('Failed to load data'))
+              ? const Center(child: Text('Failed to load data'))
               : SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                       Center(
                         child: DropdownButton<String>(
                           value: selectedSymbol,
@@ -275,20 +277,20 @@ class _SymbolChartsState extends State<SymbolCharts> {
                           },
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 600,
                         width: 600, // Adjust this height as necessary
                         child: isLoadingCandlestick
-                            ? Center(child: CircularProgressIndicator())
+                            ? const Center(child: CircularProgressIndicator())
                             : hasErrorCandlestick
-                                ? Center(
+                                ? const Center(
                                     child:
                                         Text('Failed to load candlestick data'))
                                 : Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
-                                      child: Container(
+                                      child: SizedBox(
                                         width: candleStickData.length *
                                             15.0, // Adjust based on data
                                         child: LineChart(
@@ -309,7 +311,8 @@ class _SymbolChartsState extends State<SymbolCharts> {
                                                     BarAreaData(show: false),
                                               ),
                                             ],
-                                            gridData: FlGridData(show: true),
+                                            gridData:
+                                                const FlGridData(show: true),
                                             titlesData: FlTitlesData(
                                               leftTitles: AxisTitles(
                                                 sideTitles: SideTitles(
@@ -318,8 +321,8 @@ class _SymbolChartsState extends State<SymbolCharts> {
                                                   getTitlesWidget:
                                                       (value, meta) {
                                                     return Text(
-                                                      '${value.toStringAsFixed(0)}',
-                                                      style: TextStyle(
+                                                      value.toStringAsFixed(0),
+                                                      style: const TextStyle(
                                                           fontSize: 8),
                                                     );
                                                   },
@@ -339,13 +342,13 @@ class _SymbolChartsState extends State<SymbolCharts> {
                                                             .format(date);
                                                     return Text(
                                                       formattedDate,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 8),
                                                     );
                                                   },
                                                 ),
                                               ),
-                                              topTitles: AxisTitles(
+                                              topTitles: const AxisTitles(
                                                 sideTitles: SideTitles(
                                                     showTitles: false),
                                               ),
@@ -412,7 +415,7 @@ class _SymbolChartsState extends State<SymbolCharts> {
                         ),
                       ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: indicators['data'] != null
                             ? indicators['data'].length
                             : 0,
